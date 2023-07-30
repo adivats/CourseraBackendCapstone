@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Menu, Booking
 from .serializers import UserSerializer, MenuSerializer, MenuPatchSerializer, BookingSerializer
@@ -14,9 +14,9 @@ def index(request):
     return render(request, 'index.html', {})
 
 class UserViewSet(viewsets.ModelViewSet):
-   queryset = User.objects.all()
-   serializer_class = UserSerializer
-   permission_classes = [permissions.IsAuthenticated] 
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated] 
 
 class MenuItemsView(generics.ListCreateAPIView):
     queryset = Menu.objects.all()
@@ -82,3 +82,4 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated] 
